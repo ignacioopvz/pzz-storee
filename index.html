@@ -1,602 +1,895 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PZZ Store</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>PZ Storee</title>
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Poppins",sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-    background:#000;
-    color:white;
+html {
+    scroll-behavior: smooth;
 }
 
-header{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:70px;
-    background:#000;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 20px;
-    border-bottom:1px solid #222;
-    z-index:1000;
+body {
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #050505;
+
+    color: white;
+
+    overflow-x: hidden;
 }
 
-.logo-text{
-    font-size:25px;
-    font-weight:700;
-    letter-spacing:2px;
+
+/* =========================
+   FONDO
+========================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 900px;
+
+    height: 600px;
+
+    top: -300px;
+
+    left: -300px;
+
+    border-radius: 50%;
+
+    background:
+    radial-gradient(
+        ellipse,
+        rgba(255,255,255,0.15),
+        rgba(120,120,120,0.08),
+        transparent 70%
+    );
+
+    z-index: -2;
 }
 
-.menu-btn{
-    font-size:27px;
-    cursor:pointer;
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 900px;
+
+    height: 600px;
+
+    bottom: -300px;
+
+    right: -300px;
+
+    border-radius: 50%;
+
+    background:
+    radial-gradient(
+        ellipse,
+        rgba(255,255,255,0.14),
+        rgba(120,120,120,0.08),
+        transparent 70%
+    );
+
+    z-index: -2;
 }
 
-.cart-btn{
-    cursor:pointer;
-    font-size:22px;
-    position:relative;
+
+/* ONDAS */
+
+.waves {
+
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: -1;
 }
 
-.cart-count{
-    position:absolute;
-    top:-9px;
-    right:-10px;
-    background:white;
-    color:black;
-    font-size:11px;
-    width:18px;
-    height:18px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
+
+.wave {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.13);
+
+    transform: rotate(-20deg);
 }
 
-.sidebar{
-    position:fixed;
-    top:0;
-    left:-270px;
-    width:260px;
-    height:100%;
-    background:#111;
-    padding-top:80px;
-    transition:.3s;
-    z-index:999;
+
+.wave:nth-child(1) {
+
+    width: 900px;
+
+    height: 500px;
+
+    top: -250px;
+
+    left: -250px;
 }
 
-.sidebar.active{
-    left:0;
+
+.wave:nth-child(2) {
+
+    width: 1000px;
+
+    height: 550px;
+
+    top: -220px;
+
+    left: -280px;
+
+    border-color: rgba(255,255,255,0.09);
 }
 
-.sidebar a{
-    display:block;
-    padding:18px 25px;
-    color:white;
-    text-decoration:none;
-    border-bottom:1px solid #222;
+
+.wave:nth-child(3) {
+
+    width: 1100px;
+
+    height: 600px;
+
+    top: -190px;
+
+    left: -310px;
+
+    border-color: rgba(150,150,150,0.10);
 }
 
-.sidebar a:hover{
-    background:#1d1d1d;
+
+.wave:nth-child(4) {
+
+    width: 1000px;
+
+    height: 550px;
+
+    bottom: -300px;
+
+    right: -300px;
 }
 
-.hero{
-    padding-top:120px;
-    padding-bottom:50px;
-    text-align:center;
-    padding-left:20px;
-    padding-right:20px;
+
+.wave:nth-child(5) {
+
+    width: 1100px;
+
+    height: 600px;
+
+    bottom: -330px;
+
+    right: -330px;
+
+    border-color: rgba(150,150,150,0.10);
 }
 
-.logo-box{
-    width:170px;
-    height:170px;
-    margin:auto;
-    border:2px dashed #444;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#777;
-    overflow:hidden;
+
+/* =========================
+   MENÚ
+========================= */
+
+nav {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    z-index: 100;
+
+    padding: 18px 25px;
+
+    background: rgba(0,0,0,0.75);
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.logo-box img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+
+.nav-content {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
 }
 
-.hero h1{
-    margin-top:25px;
-    font-size:35px;
+
+.nav-name {
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
 }
 
-.hero p{
-    color:#aaa;
-    margin-top:10px;
+
+.nav-links {
+
+    display: flex;
+
+    gap: 25px;
 }
 
-.btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:14px 30px;
-    background:white;
-    color:black;
-    text-decoration:none;
-    font-weight:600;
-    border-radius:40px;
+
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
 }
 
-.section{
-    padding:30px 20px;
-    max-width:1100px;
-    margin:auto;
+
+/* =========================
+   INICIO
+========================= */
+
+#inicio {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 100px 20px 60px;
 }
 
-.section h2{
-    margin-bottom:22px;
-    font-size:24px;
+
+.logo {
+
+    width: 240px;
+
+    max-width: 75vw;
+
+    height: auto;
+
+    display: block;
+
+    margin-bottom: 25px;
+
+    object-fit: contain;
+
+    filter:
+    drop-shadow(
+        0 10px 30px rgba(255,255,255,0.10)
+    );
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:20px;
+
+.fallback {
+
+    font-size: 45px;
+
+    font-weight: 900;
+
+    letter-spacing: 7px;
+
+    margin-bottom: 25px;
 }
 
-.product{
-    background:#111;
-    border:1px solid #252525;
-    border-radius:18px;
-    overflow:hidden;
-    transition:.3s;
+
+.subtitle {
+
+    color: #aaa;
+
+    font-size: 13px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 35px;
 }
 
-.product:hover{
-    transform:translateY(-5px);
-    border-color:#555;
+
+.btn {
+
+    display: inline-block;
+
+    padding: 15px 32px;
+
+    background: white;
+
+    color: black;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    transition: 0.25s;
 }
 
-.product-image{
-    width:100%;
-    height:280px;
-    background:#1a1a1a;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
+
+.btn:hover {
+
+    background: transparent;
+
+    color: white;
+
+    border: 1px solid white;
 }
 
-.product-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+
+/* =========================
+   PRODUCTOS
+========================= */
+
+#productos {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 100px 20px;
 }
 
-.product-info{
-    padding:20px;
+
+.section-title {
+
+    text-align: center;
+
+    margin-bottom: 50px;
 }
 
-.product-name{
-    font-size:21px;
-    font-weight:600;
+
+.section-title h2 {
+
+    font-size: 30px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 10px;
 }
 
-.price{
-    font-size:23px;
-    font-weight:700;
-    margin-top:8px;
+
+.section-title p {
+
+    color: #888;
+
+    font-size: 13px;
 }
 
-.quality{
-    display:inline-block;
-    margin-top:10px;
-    padding:5px 10px;
-    border-radius:20px;
-    background:#222;
-    color:#ddd;
-    font-size:13px;
+
+.products {
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(240px, 1fr)
+    );
+
+    gap: 25px;
 }
 
-.specs{
-    margin-top:15px;
-    color:#aaa;
-    font-size:14px;
-    line-height:1.7;
+
+.product {
+
+    background: rgba(12,12,12,0.90);
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    padding: 18px;
+
+    transition: 0.3s;
 }
 
-/* SELECTOR DE TALLA */
 
-.size-label{
-    display:block;
-    margin-top:18px;
-    margin-bottom:8px;
-    font-size:14px;
-    font-weight:600;
+.product:hover {
+
+    transform: translateY(-5px);
+
+    border-color: rgba(255,255,255,0.30);
 }
 
-.size-select{
-    width:100%;
-    padding:12px;
-    background:#1b1b1b;
-    color:white;
-    border:1px solid #333;
-    border-radius:10px;
-    font-size:14px;
-    cursor:pointer;
+
+.product-image {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: contain;
+
+    background: #090909;
+
+    margin-bottom: 18px;
 }
 
-.add-btn{
-    width:100%;
-    margin-top:18px;
-    padding:13px;
-    border:none;
-    border-radius:10px;
-    background:white;
-    color:black;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
+
+.product h3 {
+
+    font-size: 17px;
+
+    margin-bottom: 8px;
 }
 
-.add-btn:hover{
-    background:#ddd;
+
+.price {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    margin-bottom: 18px;
 }
 
-/* CARRITO */
 
-.cart-panel{
-    position:fixed;
-    top:0;
-    right:-400px;
-    width:380px;
-    max-width:100%;
-    height:100%;
-    background:#111;
-    z-index:2000;
-    padding:25px;
-    transition:.3s;
-    overflow-y:auto;
-    border-left:1px solid #333;
+/* =========================
+   TALLAS
+========================= */
+
+.size-title {
+
+    color: #999;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 9px;
 }
 
-.cart-panel.active{
-    right:0;
+
+.sizes {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-bottom: 18px;
 }
 
-.cart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
+
+.size {
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #333;
+
+    padding: 8px 10px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    transition: 0.2s;
 }
 
-.close-cart{
-    font-size:25px;
-    cursor:pointer;
+
+.size:hover,
+.size.selected {
+
+    background: white;
+
+    color: black;
+
+    border-color: white;
 }
 
-.cart-item{
-    border-bottom:1px solid #333;
-    padding:15px 0;
+
+.buy-btn {
+
+    width: 100%;
+
+    padding: 13px;
+
+    background: white;
+
+    color: black;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
 }
 
-.cart-item-name{
-    font-weight:600;
+
+.buy-btn:hover {
+
+    background: #ddd;
 }
 
-.cart-item-size{
-    color:#aaa;
-    margin-top:4px;
+
+/* =========================
+   CARRITO
+========================= */
+
+.cart {
+
+    position: fixed;
+
+    right: 20px;
+
+    bottom: 20px;
+
+    z-index: 200;
+
+    background: white;
+
+    color: black;
+
+    padding: 14px 18px;
+
+    border-radius: 30px;
+
+    font-weight: bold;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.5);
 }
 
-.cart-item-price{
-    color:#aaa;
-    margin-top:5px;
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 70px 20px 40px;
+
+    color: #666;
+
+    font-size: 12px;
 }
 
-.quantity{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-top:10px;
-}
 
-.quantity button{
-    width:28px;
-    height:28px;
-    border:none;
-    border-radius:50%;
-    cursor:pointer;
-}
+/* =========================
+   CELULAR
+========================= */
 
-.remove{
-    margin-top:8px;
-    background:none;
-    border:none;
-    color:#888;
-    cursor:pointer;
-}
+@media (max-width: 600px) {
 
-.total{
-    border-top:1px solid #333;
-    margin-top:20px;
-    padding-top:20px;
-    display:flex;
-    justify-content:space-between;
-    font-size:20px;
-    font-weight:700;
-}
+    .nav-links {
 
-.buy-btn{
-    width:100%;
-    padding:15px;
-    margin-top:20px;
-    border:none;
-    border-radius:12px;
-    background:white;
-    color:black;
-    font-weight:700;
-    cursor:pointer;
-    font-size:15px;
-}
+        gap: 12px;
+    }
 
-.empty{
-    color:#777;
-    text-align:center;
-    margin-top:50px;
-}
+    .nav-links a {
 
-.explore-card{
-    background:#111;
-    border:1px solid #222;
-    border-radius:15px;
-    padding:30px;
-    text-align:center;
-}
+        font-size: 9px;
+    }
 
-footer{
-    padding:40px 20px;
-    text-align:center;
-    color:#666;
-    margin-top:30px;
-    border-top:1px solid #222;
+    .logo {
+
+        width: 190px;
+    }
+
+    .fallback {
+
+        font-size: 32px;
+    }
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<header>
 
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+<!-- FONDO DE ONDAS -->
 
-    <div class="logo-text">PZZ STORE</div>
+<div class="waves">
 
-    <div class="cart-btn" onclick="openCart()">
-        🛒
-        <span class="cart-count" id="cartCount">0</span>
+    <div class="wave"></div>
+
+    <div class="wave"></div>
+
+    <div class="wave"></div>
+
+    <div class="wave"></div>
+
+    <div class="wave"></div>
+
+</div>
+
+
+<!-- MENÚ -->
+
+<nav>
+
+    <div class="nav-content">
+
+        <div class="nav-name">
+            PZ STOREE
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#inicio">
+                INICIO
+            </a>
+
+            <a href="#productos">
+                PRODUCTOS
+            </a>
+
+        </div>
+
     </div>
-
-</header>
-
-
-<nav class="sidebar" id="sidebar">
-
-    <a href="#">Inicio</a>
-    <a href="#productos">👟 Zapatillas</a>
-    <a href="#productos">👕 Ropa</a>
-    <a href="#">⚡ Entrega inmediata</a>
-    <a href="#">ℹ️ Sobre nosotros</a>
 
 </nav>
 
 
-<section class="hero">
+<!-- =========================
+     INICIO
+========================= -->
 
-    <div class="logo-box">
-        <img src="logo.jpg" alt="PZZ Store">
+<section id="inicio">
+
+
+    <!--
+    AQUÍ VA EL LOGO
+
+    CAMBIA logo.png POR EL NOMBRE
+    EXACTO DEL ARCHIVO DE TU LOGO
+    -->
+
+    <img
+        src="logo.png"
+        alt="PZ Storee"
+        class="logo"
+        onerror="
+        this.style.display='none';
+        document.getElementById('fallback').style.display='block';
+        "
+    >
+
+
+    <div
+        id="fallback"
+        class="fallback"
+        style="display:none;"
+    >
+        PZ STOREE
     </div>
 
-    <h1>PZZ STORE</h1>
 
-    <p>Los modelos más buscados. Calidad premium.</p>
+    <p class="subtitle">
 
-    <a href="#productos" class="btn">Ver catálogo</a>
+        TU ESTILO. TU ESENCIA.
+
+    </p>
+
+
+    <a
+        href="#productos"
+        class="btn"
+    >
+
+        VER PRODUCTOS
+
+    </a>
+
 
 </section>
 
 
-<section class="section" id="productos">
+<!-- =========================
+     PRODUCTOS
+========================= -->
 
-    <h2>Modelos en tendencia</h2>
-
-    <div class="grid">
-
-
-        <!-- RETRO 4 -->
-
-        <div class="product">
-
-            <div class="product-image">
-
-                <img
-                src="https://thesolesupplier.co.uk/wp-content/uploads/2022/09/Air-Jordan-4-Retro-Frozen-Moments-AQ9129-001-Release-Date.jpg"
-                alt="Retro 4">
-
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    Retro 4
-                </div>
-
-                <div class="price">
-                    $84.990
-                </div>
-
-                <span class="quality">
-                    Calidad PK
-                </span>
-
-                <div class="specs">
-
-                    👟 Tallas: 36 a 45<br>
-                    🎨 Mucha variedad de colores<br>
-                    ⭐ Calidad PK<br>
-                    📦 Disponibilidad según modelo
-
-                </div>
-
-                <button class="add-btn"
-                onclick="addToCart('Retro 4',84990,'36-45')">
-
-                    Agregar al carrito
-
-                </button>
-
-            </div>
-
-        </div>
+<section id="productos">
 
 
-        <!-- NIKE TECH -->
+    <div class="section-title">
 
-        <div class="product">
+        <h2>
+            PRODUCTOS
+        </h2>
 
-            <div class="product-image">
-
-                <img
-                src="https://static.nike.com/a/images/t_default/6f9d9f0d-4c9d-4d3d-8a65-7a4c5a3d8c32/sportswear-tech-fleece-windrunner-mens-full-zip-hoodie.png"
-                alt="Nike Tech">
-
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    Polerón Nike Tech
-                </div>
-
-                <div class="price">
-                    $65.000
-                </div>
-
-                <span class="quality">
-                    Calidad premium
-                </span>
-
-                <div class="specs">
-
-                    👕 Modelo Nike Tech<br>
-                    🎨 Varios colores disponibles<br>
-                    ⭐ Diseño premium<br>
-                    📦 Disponibilidad según modelo
-
-                </div>
-
-
-                <label class="size-label">
-                    Selecciona tu talla
-                </label>
-
-                <select class="size-select" id="nikeTechSize">
-
-                    <option value="">
-                        Seleccionar talla
-                    </option>
-
-                    <option value="S">
-                        S
-                    </option>
-
-                    <option value="M">
-                        M
-                    </option>
-
-                    <option value="L">
-                        L
-                    </option>
-
-                    <option value="XL">
-                        XL
-                    </option>
-
-                    <option value="XXL">
-                        XXL
-                    </option>
-
-                </select>
-
-
-                <button class="add-btn"
-                onclick="addNikeTech()">
-
-                    Agregar al carrito
-
-                </button>
-
-            </div>
-
-        </div>
-
+        <p>
+            Encuentra tu próximo estilo.
+        </p>
 
     </div>
 
-</section>
+
+    <div class="products">
 
 
-<section class="section">
+        <!-- =========================
+             RETRO 4
+        ========================== -->
 
-    <h2>Explorar</h2>
+        <div class="product">
 
-    <div class="grid">
 
-        <div class="explore-card">
-            👟
-            <br><br>
-            Zapatillas
+            <!--
+            CAMBIA retro4.jpg POR EL NOMBRE
+            EXACTO DE LA FOTO
+            -->
+
+            <img
+                src="retro4.jpg"
+                alt="Retro 4"
+                class="product-image"
+            >
+
+
+            <h3>
+                Retro 4
+            </h3>
+
+
+            <!-- CAMBIA EL PRECIO -->
+
+            <div class="price">
+
+                $XX.XXX
+
+            </div>
+
+
+            <div class="size-title">
+
+                SELECCIONA TU TALLA
+
+            </div>
+
+
+            <div class="sizes">
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    36
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    37
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    38
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    39
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    40
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    41
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    42
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    43
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    44
+                </button>
+
+
+                <button
+                    class="size"
+                    onclick="selectSize(this)"
+                >
+                    45
+                </button>
+
+
+            </div>
+
+
+            <button
+                class="buy-btn"
+                onclick="buyInstagram(this)"
+            >
+
+                CONSULTAR POR INSTAGRAM
+
+            </button>
+
+
         </div>
 
-        <div class="explore-card">
-            👕
-            <br><br>
-            Ropa
-        </div>
-
-        <div class="explore-card">
-            ⚡
-            <br><br>
-            Entrega inmediata
-        </div>
-
-        <div class="explore-card">
-            ℹ️
-            <br><br>
-            Sobre nosotros
-        </div>
 
     </div>
 
@@ -605,267 +898,133 @@ footer{
 
 <!-- CARRITO -->
 
-<div class="cart-panel" id="cartPanel">
+<div
+    class="cart"
+    onclick="showCart()"
+>
 
-    <div class="cart-header">
-
-        <h2>Tu carrito</h2>
-
-        <div class="close-cart" onclick="closeCart()">
-            ×
-        </div>
-
-    </div>
-
-    <div id="cartItems"></div>
-
-    <div class="total">
-
-        <span>Total</span>
-
-        <span id="cartTotal">
-            $0
-        </span>
-
-    </div>
-
-    <button class="buy-btn" onclick="buyOnInstagram()">
-
-        Comprar por Instagram
-
-    </button>
+    🛒 CARRITO
+    (<span id="cart-count">0</span>)
 
 </div>
 
 
 <footer>
 
-    © 2026 PZZ Store
-    <br>
-    Todos los derechos reservados.
+    © 2026 PZ Storee
 
 </footer>
 
 
 <script>
 
-function toggleMenu(){
 
-    document
-    .getElementById("sidebar")
-    .classList.toggle("active");
-
-}
-
+/* =========================
+   CARRITO
+========================= */
 
 let cart = [];
 
 
-function addToCart(name,price,size){
+/* =========================
+   SELECCIONAR TALLA
+========================= */
 
-    const existing = cart.find(
-        item =>
-        item.name === name &&
-        item.size === size
-    );
+function selectSize(button) {
 
-    if(existing){
 
-        existing.quantity++;
+    const product =
+        button.closest(".product");
 
-    }else{
 
-        cart.push({
+    product
+        .querySelectorAll(".size")
+        .forEach(
+            btn =>
+            btn.classList.remove("selected")
+        );
 
-            name:name,
-            price:price,
-            size:size,
-            quantity:1
 
-        });
-
-    }
-
-    updateCart();
-
-    openCart();
+    button.classList.add("selected");
 
 }
 
 
-function addNikeTech(){
+/* =========================
+   INSTAGRAM
+========================= */
 
-    const size =
-    document.getElementById("nikeTechSize").value;
+function buyInstagram(button) {
 
 
-    if(size === ""){
+    const product =
+        button.closest(".product");
 
-        alert("Por favor selecciona una talla.");
+
+    const selected =
+        product.querySelector(
+            ".size.selected"
+        );
+
+
+    if (!selected) {
+
+        alert(
+            "Primero selecciona una talla."
+        );
 
         return;
 
     }
 
 
-    addToCart(
-        "Polerón Nike Tech",
-        65000,
-        size
+    const size =
+        selected.textContent.trim();
+
+
+    cart.push({
+
+        product: "Retro 4",
+
+        size: size
+
+    });
+
+
+    document.getElementById(
+        "cart-count"
+    ).textContent = cart.length;
+
+
+    /*
+    CAMBIA pzz.storee POR TU USUARIO
+    EXACTO DE INSTAGRAM.
+    */
+
+    const instagram =
+        "https://www.instagram.com/pzz.storee/";
+
+
+    window.open(
+        instagram,
+        "_blank"
     );
 
 }
 
 
-function updateCart(){
+/* =========================
+   VER CARRITO
+========================= */
 
-    const cartItems =
-    document.getElementById("cartItems");
+function showCart() {
 
-    const cartCount =
-    document.getElementById("cartCount");
 
-    const cartTotal =
-    document.getElementById("cartTotal");
+    if (cart.length === 0) {
 
-
-    cartItems.innerHTML = "";
-
-    let total = 0;
-
-    let count = 0;
-
-
-    if(cart.length === 0){
-
-        cartItems.innerHTML =
-        '<div class="empty">Tu carrito está vacío.</div>';
-
-    }
-
-
-    cart.forEach((item,index)=>{
-
-        const subtotal =
-        item.price * item.quantity;
-
-        total += subtotal;
-
-        count += item.quantity;
-
-
-        cartItems.innerHTML += `
-
-            <div class="cart-item">
-
-                <div class="cart-item-name">
-                    ${item.name}
-                </div>
-
-                <div class="cart-item-size">
-                    Talla: ${item.size}
-                </div>
-
-                <div class="cart-item-price">
-                    ${formatPrice(item.price)}
-                </div>
-
-                <div class="quantity">
-
-                    <button onclick="changeQuantity(${index},-1)">
-                        -
-                    </button>
-
-                    <span>
-                        ${item.quantity}
-                    </span>
-
-                    <button onclick="changeQuantity(${index},1)">
-                        +
-                    </button>
-
-                </div>
-
-                <button
-                class="remove"
-                onclick="removeItem(${index})">
-
-                    Eliminar
-
-                </button>
-
-            </div>
-
-        `;
-
-    });
-
-
-    cartCount.textContent = count;
-
-    cartTotal.textContent =
-    formatPrice(total);
-
-}
-
-
-function changeQuantity(index,change){
-
-    cart[index].quantity += change;
-
-
-    if(cart[index].quantity <= 0){
-
-        cart.splice(index,1);
-
-    }
-
-
-    updateCart();
-
-}
-
-
-function removeItem(index){
-
-    cart.splice(index,1);
-
-    updateCart();
-
-}
-
-
-function formatPrice(number){
-
-    return "$" +
-    number.toLocaleString("es-CL");
-
-}
-
-
-function openCart(){
-
-    document
-    .getElementById("cartPanel")
-    .classList.add("active");
-
-}
-
-
-function closeCart(){
-
-    document
-    .getElementById("cartPanel")
-    .classList.remove("active");
-
-}
-
-
-function buyOnInstagram(){
-
-    if(cart.length === 0){
-
-        alert("Tu carrito está vacío.");
+        alert(
+            "Tu carrito está vacío."
+        );
 
         return;
 
@@ -873,69 +1032,29 @@ function buyOnInstagram(){
 
 
     let message =
-    "Hola PZZ Store 👋\n\n" +
-    "Vi esto en la página web y quiero comprarlo:\n\n";
+        "Productos seleccionados:\n\n";
 
 
-    let total = 0;
+    cart.forEach(
+        (item, index) => {
 
+            message +=
+                `${index + 1}. ${item.product} - Talla ${item.size}\n`;
 
-    cart.forEach(item => {
-
-        const subtotal =
-        item.price * item.quantity;
-
-        total += subtotal;
-
-
-        message +=
-        "• " +
-        item.name +
-        " | Talla " +
-        item.size +
-        " | x" +
-        item.quantity +
-        " | " +
-        formatPrice(subtotal) +
-        "\n";
-
-    });
-
-
-    message +=
-    "\nTotal: " +
-    formatPrice(total) +
-    "\n\n" +
-    "Quiero coordinar la compra 😊";
-
-
-    navigator.clipboard
-    .writeText(message)
-    .catch(()=>{});
-
-
-    window.open(
-        "https://ig.me/m/pzz.storee",
-        "_blank"
+        }
     );
 
 
-    alert(
-        "Se abrió Instagram.\n\n" +
-        "El mensaje con tu pedido quedó copiado. " +
-        "Solo pégalo y envíalo."
-    );
+    alert(message);
 
 }
 
-
-updateCart();
-
 </script>
 
+
 </body>
+
 </html>
-```
 
 
 
