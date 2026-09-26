@@ -4,186 +4,107 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PZ Storee</title>
+<title>PZ STOREE</title>
 
 <style>
-
-/* =========================
-   GENERAL
-========================= */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
     scroll-behavior: smooth;
 }
 
 body {
+    font-family: Arial, Helvetica, sans-serif;
     background: #050505;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
-
 /* =========================
-   FONDO AURORA / TRAZOS
+   FONDO ARTÍSTICO
 ========================= */
 
-.background {
+body::before,
+body::after {
+    content: "";
     position: fixed;
     inset: 0;
-    z-index: -10;
-    background: #050505;
-    overflow: hidden;
     pointer-events: none;
+    z-index: -2;
 }
 
-.glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: .16;
+body::before {
+    background:
+        radial-gradient(circle at 8% 15%, rgba(255,255,255,0.08), transparent 22%),
+        radial-gradient(circle at 92% 28%, rgba(255,255,255,0.07), transparent 23%),
+        radial-gradient(circle at 12% 82%, rgba(255,255,255,0.06), transparent 22%),
+        radial-gradient(circle at 88% 82%, rgba(255,255,255,0.07), transparent 24%);
 }
 
-.glow-one {
-    width: 550px;
-    height: 300px;
-    background: #fff;
-    top: -100px;
-    left: -180px;
-    transform: rotate(-25deg);
+body::after {
+    background:
+        linear-gradient(
+            125deg,
+            transparent 0%,
+            rgba(255,255,255,0.025) 18%,
+            transparent 28%,
+            transparent 70%,
+            rgba(255,255,255,0.035) 82%,
+            transparent 92%
+        );
 }
 
-.glow-two {
-    width: 500px;
-    height: 280px;
-    background: #aaa;
-    bottom: -80px;
-    right: -150px;
-    transform: rotate(25deg);
+/* Trazos laterales */
+
+.aurora {
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.65;
+    filter: blur(7px);
 }
 
-.glow-three {
-    width: 350px;
-    height: 200px;
-    background: #ddd;
-    top: 45%;
-    right: -180px;
-    filter: blur(110px);
-    opacity: .10;
-}
-
-.stroke {
-    position: absolute;
-    height: 2px;
-    border-radius: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.20),
-        rgba(255,255,255,.75),
-        rgba(210,210,210,.35),
-        transparent
-    );
-    filter: blur(1px);
-    opacity: .75;
-}
-
-.stroke-left-1 {
-    width: 420px;
-    left: -130px;
-    top: 13%;
-    transform: rotate(-22deg);
-}
-
-.stroke-left-2 {
-    width: 320px;
-    left: -90px;
-    top: 27%;
-    transform: rotate(18deg);
-    opacity: .50;
-}
-
-.stroke-left-3 {
-    width: 500px;
-    left: -190px;
-    top: 68%;
-    transform: rotate(-13deg);
-    opacity: .65;
-}
-
-.stroke-left-4 {
-    width: 280px;
-    left: -60px;
-    top: 82%;
-    transform: rotate(25deg);
-    opacity: .40;
-}
-
-.stroke-right-1 {
+.aurora.one {
     width: 430px;
-    right: -150px;
-    top: 16%;
-    transform: rotate(21deg);
+    height: 100px;
+    left: -150px;
+    top: 20%;
+    border-top: 2px solid rgba(255,255,255,0.18);
+    border-radius: 50%;
+    transform: rotate(-18deg);
 }
 
-.stroke-right-2 {
-    width: 300px;
-    right: -80px;
-    top: 31%;
-    transform: rotate(-17deg);
-    opacity: .48;
+.aurora.two {
+    width: 360px;
+    height: 90px;
+    right: -130px;
+    top: 30%;
+    border-top: 2px solid rgba(255,255,255,0.16);
+    border-radius: 50%;
+    transform: rotate(22deg);
 }
 
-.stroke-right-3 {
-    width: 520px;
-    right: -210px;
-    top: 66%;
-    transform: rotate(15deg);
-    opacity: .62;
-}
-
-.stroke-right-4 {
-    width: 300px;
-    right: -80px;
-    top: 84%;
-    transform: rotate(-24deg);
-    opacity: .42;
-}
-
-.soft-stroke {
-    position: absolute;
-    height: 5px;
-    border-radius: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.08),
-        rgba(255,255,255,.28),
-        transparent
-    );
-    filter: blur(5px);
-}
-
-.soft-left {
-    width: 500px;
+.aurora.three {
+    width: 420px;
+    height: 100px;
     left: -180px;
-    top: 45%;
-    transform: rotate(-10deg);
+    bottom: 20%;
+    border-top: 2px solid rgba(255,255,255,0.14);
+    border-radius: 50%;
+    transform: rotate(15deg);
 }
 
-.soft-right {
-    width: 500px;
-    right: -180px;
-    top: 50%;
-    transform: rotate(12deg);
+.aurora.four {
+    width: 400px;
+    height: 90px;
+    right: -170px;
+    bottom: 17%;
+    border-top: 2px solid rgba(255,255,255,0.16);
+    border-radius: 50%;
+    transform: rotate(-17deg);
 }
-
 
 /* =========================
    NAVEGACIÓN
@@ -194,90 +115,145 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 35px;
-
-    background: rgba(0,0,0,.60);
+    height: 72px;
+    background: rgba(5,5,5,0.82);
     backdrop-filter: blur(14px);
-
-    border-bottom: 1px solid rgba(255,255,255,.08);
-
-    z-index: 100;
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+    z-index: 1000;
 }
 
 .nav-logo {
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 2px;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 3px;
 }
 
-.nav-links {
+/* Botón tres líneas */
+
+.menu-button {
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 22px;
+    gap: 5px;
+    cursor: pointer;
 }
 
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 1px;
+.menu-button span {
+    width: 21px;
+    height: 2px;
+    background: white;
+    border-radius: 10px;
 }
-
-.nav-links a:hover {
-    opacity: .55;
-}
-
 
 /* =========================
-   CARRITO
+   MENÚ LATERAL
 ========================= */
 
-.cart-button {
-    position: relative;
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 1100;
+}
 
-    border: 1px solid rgba(255,255,255,.35);
-    background: rgba(255,255,255,.05);
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -360px;
+    width: min(360px, 90%);
+    height: 100vh;
+    background: #0b0b0b;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding: 30px 25px;
+    z-index: 1200;
+    transition: right 0.35s ease;
+    box-shadow: -20px 0 50px rgba(0,0,0,0.5);
+}
+
+.side-menu.active {
+    right: 0;
+}
+
+.close-menu {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    background: none;
+    border: none;
     color: white;
-
-    padding: 9px 13px;
-
+    font-size: 34px;
     cursor: pointer;
-
-    font-size: 12px;
-
-    transition: .2s;
 }
 
-.cart-button:hover {
-    background: white;
-    color: black;
+.side-menu h3 {
+    margin-top: 25px;
+    margin-bottom: 35px;
+    letter-spacing: 3px;
+    font-size: 20px;
 }
 
-.cart-count {
-    display: inline-flex;
-
-    min-width: 18px;
-    height: 18px;
-
-    align-items: center;
-    justify-content: center;
-
-    margin-left: 5px;
-
-    border-radius: 50%;
-
-    background: white;
-    color: black;
-
-    font-size: 10px;
+.menu-link,
+.menu-cart {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: white;
+    padding: 17px 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    text-align: left;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    cursor: pointer;
 }
 
+.menu-link:hover,
+.menu-cart:hover {
+    color: #bdbdbd;
+}
+
+.menu-cart {
+    margin-top: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+/* =========================
+   SECCIONES
+========================= */
+
+section {
+    padding: 110px 20px;
+    position: relative;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
 
 /* =========================
    INICIO
@@ -285,592 +261,484 @@ nav {
 
 #inicio {
     min-height: 100vh;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    text-align: center;
-
-    padding: 110px 20px 70px;
+    padding-top: 100px;
 }
 
 .hero {
-    max-width: 700px;
     width: 100%;
+    max-width: 900px;
+    text-align: center;
 }
 
 .logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+    width: 190px;
+    height: 190px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow:
+        0 0 35px rgba(255,255,255,0.06),
+        0 0 90px rgba(255,255,255,0.03);
+    background: #111;
 }
 
 .logo {
-    width: 210px;
-    max-width: 70vw;
-    height: auto;
-    object-fit: contain;
-
-    filter:
-        drop-shadow(0 0 15px rgba(255,255,255,.10))
-        drop-shadow(0 0 35px rgba(255,255,255,.06));
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hero h1 {
-    font-size: clamp(32px, 6vw, 65px);
-    font-weight: 500;
-    letter-spacing: 7px;
-    margin-bottom: 18px;
+    font-size: clamp(27px, 5vw, 52px);
+    letter-spacing: 5px;
+    margin-bottom: 15px;
+    font-weight: 800;
 }
 
 .hero p {
-    color: #aaa;
-    font-size: 14px;
-    letter-spacing: 3px;
-    margin-bottom: 40px;
+    color: #d0d0d0;
+    font-size: clamp(16px, 2.5vw, 22px);
+    letter-spacing: 2px;
+    margin-bottom: 35px;
 }
 
 .main-button {
     display: inline-block;
-
-    padding: 15px 30px;
-
-    border: 1px solid rgba(255,255,255,.6);
-
-    color: white;
     text-decoration: none;
-
-    font-size: 12px;
-    letter-spacing: 2px;
-
-    background: rgba(255,255,255,.03);
-
-    transition: .3s;
+    color: #050505;
+    background: white;
+    padding: 15px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: 0.25s;
 }
 
 .main-button:hover {
-    background: white;
-    color: black;
+    transform: translateY(-3px);
+    background: #dedede;
 }
-
 
 /* =========================
-   SECCIONES
+   TÍTULOS
 ========================= */
-
-section {
-    scroll-margin-top: 80px;
-}
-
-.content-section {
-    min-height: 70vh;
-    padding: 120px 25px 90px;
-}
 
 .section-title {
     text-align: center;
-    margin-bottom: 55px;
+    margin-bottom: 45px;
 }
 
 .section-title h2 {
-    font-size: 32px;
-    font-weight: 400;
-    letter-spacing: 5px;
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
 }
 
 .section-title p {
-    margin-top: 12px;
-    color: #888;
-    font-size: 13px;
+    color: #999;
 }
-
 
 /* =========================
    PRODUCTOS
 ========================= */
 
-.products-grid {
-    max-width: 1000px;
-    margin: auto;
-
+.products {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
 }
 
-.product {
-    padding: 25px;
+.product-card {
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: 0.3s;
+}
 
-    background: rgba(255,255,255,.035);
-
-    border: 1px solid rgba(255,255,255,.10);
-
-    backdrop-filter: blur(12px);
-
-    text-align: center;
-
-    border-radius: 5px;
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,255,255,0.2);
 }
 
 .product-image {
-    height: 330px;
-
+    height: 300px;
+    background:
+        radial-gradient(circle, rgba(255,255,255,0.07), transparent 50%),
+        #111;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    margin-bottom: 25px;
-
-    border: 1px dashed rgba(255,255,255,.15);
-
-    color: #555;
-
-    font-size: 12px;
-    letter-spacing: 2px;
+    color: #777;
+    font-size: 14px;
+    letter-spacing: 1px;
 }
 
-.product h3 {
+.product-info {
+    padding: 23px;
+}
+
+.product-info h3 {
     font-size: 21px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+}
+
+.product-description {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 16px;
 }
 
 .price {
-    color: #ddd;
-    font-size: 17px;
-    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 18px;
 }
-
 
 /* =========================
    TALLAS
 ========================= */
 
-.sizes-title {
-    color: #888;
-    font-size: 11px;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
+.size-title {
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 10px;
 }
 
 .sizes {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 7px;
-
-    margin-bottom: 22px;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
-.size {
-    width: 40px;
-    height: 40px;
-
-    border: 1px solid rgba(255,255,255,.20);
-
+.size-button {
     background: transparent;
     color: white;
-
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 9px 12px;
     cursor: pointer;
-
-    transition: .2s;
+    transition: 0.2s;
 }
 
-.size:hover {
-    border-color: white;
-}
-
-.size.selected {
+.size-button:hover,
+.size-button.selected {
     background: white;
     color: black;
-    border-color: white;
 }
 
-
 /* =========================
-   BOTONES PRODUCTOS
+   BOTÓN CARRITO
 ========================= */
 
 .add-button {
     width: 100%;
-
+    border: none;
+    border-radius: 10px;
     padding: 14px;
-
-    border: 1px solid rgba(255,255,255,.6);
-
     background: white;
     color: black;
-
+    font-weight: 700;
     cursor: pointer;
-
-    font-size: 11px;
-    letter-spacing: 2px;
-
-    transition: .3s;
+    transition: 0.25s;
 }
 
 .add-button:hover {
-    background: transparent;
-    color: white;
+    background: #dcdcdc;
 }
-
 
 /* =========================
-   ENTREGA / SOBRE NOSOTROS
+   ENTREGA INMEDIATA
 ========================= */
 
-.info-box {
+.delivery-box {
     max-width: 800px;
     margin: auto;
-
-    padding: 45px 35px;
-
-    background: rgba(255,255,255,.035);
-
-    border: 1px solid rgba(255,255,255,.10);
-
-    backdrop-filter: blur(12px);
-
+    padding: 40px 30px;
     text-align: center;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
 }
 
-.info-box h3 {
-    font-size: 24px;
-    font-weight: 400;
-    letter-spacing: 3px;
-
+.delivery-icon {
+    font-size: 45px;
     margin-bottom: 20px;
 }
 
-.info-box p {
-    color: #aaa;
-    line-height: 1.8;
-    font-size: 14px;
+.delivery-box h3 {
+    font-size: 27px;
+    margin-bottom: 15px;
 }
 
+.delivery-box p {
+    color: #aaa;
+    line-height: 1.7;
+}
 
 /* =========================
-   CARRITO MODAL
+   SOBRE NOSOTROS
 ========================= */
 
-.cart-overlay {
+.about-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 35px;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.about-box p {
+    color: #aaa;
+    line-height: 1.8;
+}
+
+/* =========================
+   CARRITO
+========================= */
+
+.cart-modal {
     position: fixed;
     inset: 0;
-
-    background: rgba(0,0,0,.75);
-
+    background: rgba(0,0,0,0.75);
     backdrop-filter: blur(8px);
-
-    z-index: 200;
-
     display: none;
-
     align-items: center;
     justify-content: center;
-
+    z-index: 2000;
     padding: 20px;
 }
 
-.cart-overlay.active {
+.cart-modal.active {
     display: flex;
 }
 
-.cart {
-    width: 100%;
-    max-width: 520px;
+.cart-box {
+    width: min(520px, 100%);
     max-height: 85vh;
-
     overflow-y: auto;
-
-    background: #0b0b0b;
-
-    border: 1px solid rgba(255,255,255,.15);
-
-    padding: 28px;
-
-    box-shadow: 0 20px 70px rgba(0,0,0,.7);
+    background: #0d0d0d;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 25px;
 }
 
 .cart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 25px;
 }
 
 .cart-header h2 {
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 2px;
+    font-size: 25px;
 }
 
 .close-cart {
-    border: 0;
-    background: transparent;
+    background: none;
+    border: none;
     color: white;
-
-    font-size: 25px;
-
+    font-size: 30px;
     cursor: pointer;
 }
 
 .cart-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-
-    padding: 18px 0;
-
-    border-bottom: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 17px 0;
 }
 
-.cart-item-info {
-    flex: 1;
+.cart-item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .cart-item-name {
-    font-size: 14px;
-    margin-bottom: 6px;
+    font-weight: 700;
 }
 
 .cart-item-details {
-    color: #888;
-    font-size: 11px;
+    color: #999;
+    font-size: 13px;
+    margin-top: 5px;
 }
 
-.quantity-controls {
+.cart-controls {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    margin-top: 12px;
 }
 
-.quantity-controls button {
+.quantity-button {
     width: 28px;
     height: 28px;
-
-    border: 1px solid rgba(255,255,255,.25);
-
+    border-radius: 7px;
+    border: 1px solid rgba(255,255,255,0.2);
     background: transparent;
     color: white;
-
     cursor: pointer;
-}
-
-.quantity {
-    min-width: 20px;
-    text-align: center;
 }
 
 .remove-button {
-    border: 0;
-    background: transparent;
-    color: #777;
-
+    border: none;
+    background: none;
+    color: #999;
     cursor: pointer;
-    font-size: 11px;
-}
-
-.remove-button:hover {
-    color: white;
+    margin-left: auto;
 }
 
 .cart-total {
     display: flex;
     justify-content: space-between;
-
-    padding: 25px 0;
-
-    font-size: 18px;
+    font-size: 21px;
+    font-weight: 800;
+    margin: 25px 0;
 }
 
-.instagram-checkout {
+.instagram-button {
+    display: block;
     width: 100%;
-
-    padding: 16px;
-
-    border: 0;
-
+    text-align: center;
+    text-decoration: none;
     background: white;
     color: black;
-
-    cursor: pointer;
-
-    font-size: 12px;
-    letter-spacing: 2px;
-
-    transition: .3s;
-}
-
-.instagram-checkout:hover {
-    background: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-top: 10px;
 }
 
 .empty-cart {
-    color: #777;
     text-align: center;
+    color: #888;
     padding: 30px 0;
-    font-size: 13px;
 }
-
 
 /* =========================
    FOOTER
 ========================= */
 
 footer {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 35px 20px;
     text-align: center;
-    padding: 50px 20px;
-    color: #555;
-    font-size: 11px;
-    letter-spacing: 2px;
+    color: #777;
+    font-size: 13px;
 }
 
-
 /* =========================
-   MÓVIL
+   RESPONSIVE
 ========================= */
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
 
     nav {
-        padding: 0 15px;
-        height: 62px;
+        padding: 0 18px;
     }
 
     .nav-logo {
-        font-size: 13px;
+        font-size: 16px;
     }
 
-    .nav-links {
-        gap: 9px;
-    }
-
-    .nav-links a {
-        font-size: 9px;
-    }
-
-    .cart-button {
-        padding: 7px 9px;
-        font-size: 10px;
-    }
-
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .logo {
-        width: 170px;
+    .logo-container {
+        width: 155px;
+        height: 155px;
     }
 
     .hero h1 {
-        font-size: 34px;
-        letter-spacing: 4px;
-    }
-
-    .hero p {
-        font-size: 11px;
         letter-spacing: 2px;
     }
 
-    .content-section {
-        padding: 100px 18px 70px;
+    .hero p {
+        letter-spacing: 1px;
+    }
+
+    section {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     .product-image {
-        height: 280px;
+        height: 260px;
     }
 
-    .cart {
-        padding: 20px;
+    .about-box,
+    .delivery-box {
+        padding: 28px 20px;
     }
-
 }
 
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================
-     FONDO
-========================= -->
-
-<div class="background">
-
-    <div class="glow glow-one"></div>
-    <div class="glow glow-two"></div>
-    <div class="glow glow-three"></div>
-
-    <div class="stroke stroke-left-1"></div>
-    <div class="stroke stroke-left-2"></div>
-    <div class="stroke stroke-left-3"></div>
-    <div class="stroke stroke-left-4"></div>
-
-    <div class="stroke stroke-right-1"></div>
-    <div class="stroke stroke-right-2"></div>
-    <div class="stroke stroke-right-3"></div>
-    <div class="stroke stroke-right-4"></div>
-
-    <div class="soft-stroke soft-left"></div>
-    <div class="soft-stroke soft-right"></div>
-
-</div>
-
+<!-- FONDO -->
+<div class="aurora one"></div>
+<div class="aurora two"></div>
+<div class="aurora three"></div>
+<div class="aurora four"></div>
 
 <!-- =========================
      NAV
 ========================= -->
 
 <nav>
+    <div class="nav-logo">PZ STOREE</div>
 
-    <div class="nav-logo">
-        PZ STOREE
-    </div>
-
-    <div class="nav-links">
-
-        <a href="#inicio">
-            INICIO
-        </a>
-
-        <a href="#zapatillas">
-            ZAPATILLAS
-        </a>
-
-        <a href="#ropa">
-            ROPA
-        </a>
-
-        <a href="#entrega">
-            ENTREGA
-        </a>
-
-        <a href="#nosotros">
-            NOSOTROS
-        </a>
-
-        <button
-            class="cart-button"
-            onclick="openCart()"
-        >
-            🛒
-            <span class="cart-count" id="cartCount">
-                0
-            </span>
-        </button>
-
-    </div>
-
+    <button class="menu-button" onclick="openMenu()" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 </nav>
 
+<!-- =========================
+     MENÚ
+========================= -->
+
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+<div class="side-menu" id="sideMenu">
+
+    <button class="close-menu" onclick="closeMenu()">×</button>
+
+    <h3>PZ STOREE</h3>
+
+    <a href="#inicio" class="menu-link" onclick="closeMenu()">
+        🏠 INICIO
+    </a>
+
+    <a href="#zapatillas" class="menu-link" onclick="closeMenu()">
+        👟 CATÁLOGO DE ZAPATILLAS
+    </a>
+
+    <a href="#ropa" class="menu-link" onclick="closeMenu()">
+        👕 CATÁLOGO DE ROPA
+    </a>
+
+    <a href="#entrega" class="menu-link" onclick="closeMenu()">
+        ⚡ ENTREGA INMEDIATA
+    </a>
+
+    <a href="#nosotros" class="menu-link" onclick="closeMenu()">
+        ℹ️ SOBRE NOSOTROS
+    </a>
+
+    <button class="menu-cart" onclick="closeMenu(); openCart()">
+        🛒 VER CARRITO (<span id="menuCartCount">0</span>)
+    </button>
+
+</div>
 
 <!-- =========================
      INICIO
@@ -881,242 +749,141 @@ footer {
     <div class="hero">
 
         <div class="logo-container">
-
-            <img
-                src="18339.jpg"
-                alt="PZ Storee"
-                class="logo"
-            >
-
+            <img src="18339.jpg" alt="PZ Storee" class="logo">
         </div>
 
-        <h1>
-            PZ STOREE
-        </h1>
+        <h1>PZ STOREE</h1>
 
-        <p>
-            ESTILO · CALIDAD · ORIGINALIDAD
-        </p>
+        <p>BIENVENIDO A NUESTRA PÁGINA WEB</p>
 
-        <a
-            href="#zapatillas"
-            class="main-button"
-        >
-            VER PRODUCTOS
+        <a href="#zapatillas" class="main-button">
+            VER CATÁLOGO
         </a>
 
     </div>
 
 </section>
 
-
 <!-- =========================
      ZAPATILLAS
 ========================= -->
 
-<section
-    id="zapatillas"
-    class="content-section"
->
+<section id="zapatillas">
 
-    <div class="section-title">
+    <div class="container">
 
-        <h2>
-            ZAPATILLAS
-        </h2>
+        <div class="section-title">
+            <h2>CATÁLOGO DE ZAPATILLAS</h2>
+            <p>Encuentra tu próximo par.</p>
+        </div>
 
-        <p>
-            Nuestra colección
-        </p>
+        <div class="products">
 
-    </div>
+            <div class="product-card">
 
+                <div class="product-image">
+                    IMAGEN RETRO 4
+                </div>
 
-    <div class="products-grid">
+                <div class="product-info">
 
+                    <h3>Retro 4</h3>
 
-        <!-- RETRO 4 -->
+                    <p class="product-description">
+                        Zapatillas Retro 4
+                    </p>
 
-        <div class="product">
+                    <div class="price">
+                        $84.990
+                    </div>
 
-            <div class="product-image">
-                IMAGEN RETRO 4
-            </div>
+                    <div class="size-title">
+                        SELECCIONA TU TALLA
+                    </div>
 
-            <h3>
-                RETRO 4
-            </h3>
+                    <div class="sizes" id="retroSizes">
 
-            <div class="price">
-                $84.990
-            </div>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">36</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">37</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">38</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">39</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">40</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">41</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">42</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">43</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">44</button>
+                        <button class="size-button" onclick="selectSize(this, 'retro')">45</button>
 
-            <div class="sizes-title">
-                SELECCIONA TU TALLA
-            </div>
+                    </div>
 
-            <div
-                class="sizes"
-                data-product="Retro 4"
-            >
+                    <button class="add-button" onclick="addToCart('Retro 4', 84990, selectedSizes.retro)">
+                        AGREGAR AL CARRITO
+                    </button>
 
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >36</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >37</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >38</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >39</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >40</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >41</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >42</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >43</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >44</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >45</button>
+                </div>
 
             </div>
-
-            <button
-                class="add-button"
-                onclick="addToCart(
-                    'Retro 4',
-                    84990,
-                    this
-                )"
-            >
-                AGREGAR AL CARRITO
-            </button>
 
         </div>
 
     </div>
 
 </section>
-
 
 <!-- =========================
      ROPA
 ========================= -->
 
-<section
-    id="ropa"
-    class="content-section"
->
+<section id="ropa">
 
-    <div class="section-title">
+    <div class="container">
 
-        <h2>
-            ROPA
-        </h2>
+        <div class="section-title">
+            <h2>CATÁLOGO DE ROPA</h2>
+            <p>Prendas seleccionadas para tu estilo.</p>
+        </div>
 
-        <p>
-            Polerones y prendas
-        </p>
+        <div class="products">
 
-    </div>
+            <div class="product-card">
 
+                <div class="product-image">
+                    IMAGEN DEL POLERÓN
+                </div>
 
-    <div class="products-grid">
+                <div class="product-info">
 
+                    <h3>Polerón</h3>
 
-        <!-- POLERÓN -->
+                    <p class="product-description">
+                        Polerón PZ Storee
+                    </p>
 
-        <div class="product">
+                    <div class="price">
+                        $65.000
+                    </div>
 
-            <div class="product-image">
-                IMAGEN DEL POLERÓN
-            </div>
+                    <div class="size-title">
+                        SELECCIONA TU TALLA
+                    </div>
 
-            <h3>
-                POLERÓN
-            </h3>
+                    <div class="sizes" id="hoodieSizes">
 
-            <div class="price">
-                $65.000
-            </div>
+                        <button class="size-button" onclick="selectSize(this, 'hoodie')">S</button>
+                        <button class="size-button" onclick="selectSize(this, 'hoodie')">M</button>
+                        <button class="size-button" onclick="selectSize(this, 'hoodie')">L</button>
+                        <button class="size-button" onclick="selectSize(this, 'hoodie')">XL</button>
+                        <button class="size-button" onclick="selectSize(this, 'hoodie')">XXL</button>
 
-            <div class="sizes-title">
-                SELECCIONA TU TALLA
-            </div>
+                    </div>
 
-            <div
-                class="sizes"
-                data-product="Polerón"
-            >
+                    <button class="add-button" onclick="addToCart('Polerón', 65000, selectedSizes.hoodie)">
+                        AGREGAR AL CARRITO
+                    </button>
 
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >S</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >M</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >L</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >XL</button>
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >XXL</button>
+                </div>
 
             </div>
-
-            <button
-                class="add-button"
-                onclick="addToCart(
-                    'Polerón',
-                    65000,
-                    this
-                )"
-            >
-                AGREGAR AL CARRITO
-            </button>
 
         </div>
 
@@ -1124,148 +891,164 @@ footer {
 
 </section>
 
-
 <!-- =========================
      ENTREGA INMEDIATA
 ========================= -->
 
-<section
-    id="entrega"
-    class="content-section"
->
+<section id="entrega">
 
-    <div class="section-title">
+    <div class="container">
 
-        <h2>
-            ENTREGA INMEDIATA
-        </h2>
+        <div class="section-title">
+            <h2>ENTREGA INMEDIATA</h2>
+            <p>Productos disponibles para entrega.</p>
+        </div>
 
-    </div>
+        <div class="delivery-box">
 
-    <div class="info-box">
+            <div class="delivery-icon">
+                ⚡
+            </div>
 
-        <h3>
-            ENTREGA
-        </h3>
+            <h3>Entrega inmediata</h3>
 
-        <p>
-            Consulta la disponibilidad de tu producto
-            y coordina la entrega directamente con
-            PZ Storee por Instagram.
-        </p>
+            <p>
+                Los productos disponibles para entrega inmediata
+                podrán ser entregados rápidamente una vez confirmada
+                la compra.
+            </p>
+
+        </div>
 
     </div>
 
 </section>
-
 
 <!-- =========================
      SOBRE NOSOTROS
 ========================= -->
 
-<section
-    id="nosotros"
-    class="content-section"
->
+<section id="nosotros">
 
-    <div class="section-title">
+    <div class="container">
 
-        <h2>
-            SOBRE NOSOTROS
-        </h2>
+        <div class="section-title">
+            <h2>SOBRE NOSOTROS</h2>
+        </div>
 
-    </div>
+        <div class="about-box">
 
-    <div class="info-box">
+            <p>
+                En PZ STOREE buscamos ofrecer productos con estilo,
+                calidad y una presentación cuidada. Nuestra página
+                está pensada para que puedas revisar nuestros productos
+                de manera sencilla y realizar tu pedido de forma rápida.
+            </p>
 
-        <h3>
-            PZ STOREE
-        </h3>
-
-        <p>
-            Somos una tienda enfocada en ofrecer
-            productos con estilo y una experiencia
-            de compra simple, moderna y directa.
-        </p>
+        </div>
 
     </div>
 
 </section>
-
 
 <!-- =========================
      FOOTER
 ========================= -->
 
 <footer>
-
-    PZ STOREE · TODOS LOS DERECHOS RESERVADOS
-
+    © 2026 PZ STOREE · Todos los derechos reservados.
 </footer>
-
 
 <!-- =========================
      CARRITO
 ========================= -->
 
-<div
-    class="cart-overlay"
-    id="cartOverlay"
->
+<div class="cart-modal" id="cartModal">
 
-    <div class="cart">
+    <div class="cart-box">
 
         <div class="cart-header">
 
-            <h2>
-                MI CARRITO
-            </h2>
+            <h2>Tu carrito</h2>
 
-            <button
-                class="close-cart"
-                onclick="closeCart()"
-            >
+            <button class="close-cart" onclick="closeCart()">
                 ×
             </button>
 
         </div>
 
-
-        <div id="cartItems">
-
-            <div class="empty-cart">
-                Tu carrito está vacío.
-            </div>
-
-        </div>
-
+        <div id="cartItems"></div>
 
         <div class="cart-total">
 
-            <span>
-                TOTAL
-            </span>
+            <span>Total</span>
 
-            <strong id="cartTotal">
+            <span id="cartTotal">
                 $0
-            </strong>
+            </span>
 
         </div>
 
-
-        <button
-            class="instagram-checkout"
-            onclick="sendInstagramOrder()"
+        <a
+            href="https://www.instagram.com/pzz.storee/"
+            target="_blank"
+            class="instagram-button"
         >
-            FINALIZAR PEDIDO POR INSTAGRAM
-        </button>
+            CONSULTAR PEDIDO EN INSTAGRAM
+        </a>
 
     </div>
 
 </div>
 
-
 <script>
+
+/* =========================
+   MENÚ
+========================= */
+
+function openMenu() {
+
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("menuOverlay").classList.add("active");
+
+}
+
+function closeMenu() {
+
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("menuOverlay").classList.remove("active");
+
+}
+
+
+/* =========================
+   TALLAS
+========================= */
+
+let selectedSizes = {
+
+    retro: null,
+    hoodie: null
+
+};
+
+function selectSize(button, type) {
+
+    const container = button.parentElement;
+
+    const buttons = container.querySelectorAll(".size-button");
+
+    buttons.forEach(function(btn) {
+        btn.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+
+    selectedSizes[type] = button.textContent;
+
+}
+
 
 /* =========================
    CARRITO
@@ -1274,92 +1057,38 @@ footer {
 let cart = [];
 
 
-/* =========================
-   SELECCIONAR TALLA
-========================= */
+function addToCart(name, price, size) {
 
-function selectSize(button) {
+    if (!size) {
 
-    const container =
-        button.parentElement;
-
-    const buttons =
-        container.querySelectorAll(".size");
-
-    buttons.forEach(function(btn) {
-
-        btn.classList.remove("selected");
-
-    });
-
-    button.classList.add("selected");
-
-}
-
-
-/* =========================
-   AGREGAR PRODUCTO
-========================= */
-
-function addToCart(
-    productName,
-    price,
-    button
-) {
-
-    const product =
-        button.closest(".product");
-
-    const selectedSize =
-        product.querySelector(".size.selected");
-
-
-    if (!selectedSize) {
-
-        alert(
-            "Primero selecciona una talla."
-        );
+        alert("Por favor selecciona una talla antes de agregar el producto.");
 
         return;
 
     }
 
+    const existingProduct = cart.find(function(item) {
 
-    const size =
-        selectedSize.textContent.trim();
+        return item.name === name && item.size === size;
 
+    });
 
-    const existing =
-        cart.find(function(item) {
+    if (existingProduct) {
 
-            return (
-                item.name === productName &&
-                item.size === size
-            );
-
-        });
-
-
-    if (existing) {
-
-        existing.quantity++;
+        existingProduct.quantity++;
 
     } else {
 
         cart.push({
 
-            name: productName,
-
+            name: name,
             price: price,
-
             size: size,
-
             quantity: 1
 
         });
 
     }
-
 
     updateCart();
 
@@ -1368,135 +1097,102 @@ function addToCart(
 }
 
 
-/* =========================
-   ACTUALIZAR CARRITO
-========================= */
-
 function updateCart() {
 
-    const cartItems =
-        document.getElementById("cartItems");
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("menuCartCount");
+    const cartTotal = document.getElementById("cartTotal");
 
-    const cartCount =
-        document.getElementById("cartCount");
-
-    const cartTotal =
-        document.getElementById("cartTotal");
-
-
-    if (cart.length === 0) {
-
-        cartItems.innerHTML = `
-            <div class="empty-cart">
-                Tu carrito está vacío.
-            </div>
-        `;
-
-        cartCount.textContent = "0";
-
-        cartTotal.textContent = "$0";
-
-        return;
-
-    }
-
+    cartItems.innerHTML = "";
 
     let total = 0;
     let quantityTotal = 0;
 
+    if (cart.length === 0) {
 
-    cartItems.innerHTML = "";
+        cartItems.innerHTML =
+            '<div class="empty-cart">Tu carrito está vacío.</div>';
 
+    }
 
     cart.forEach(function(item, index) {
 
-        const itemTotal =
-            item.price * item.quantity;
+        const subtotal = item.price * item.quantity;
 
-        total += itemTotal;
-
+        total += subtotal;
         quantityTotal += item.quantity;
 
+        const itemHTML = `
 
-        const div =
-            document.createElement("div");
+            <div class="cart-item">
 
-        div.className = "cart-item";
+                <div class="cart-item-top">
 
+                    <div>
 
-        div.innerHTML = `
+                        <div class="cart-item-name">
+                            ${item.name}
+                        </div>
 
-            <div class="cart-item-info">
+                        <div class="cart-item-details">
+                            Talla: ${item.size}
+                        </div>
 
-                <div class="cart-item-name">
-                    ${item.name}
+                    </div>
+
+                    <strong>
+                        ${formatPrice(subtotal)}
+                    </strong>
+
                 </div>
 
-                <div class="cart-item-details">
-                    Talla: ${item.size}
-                    · $${item.price.toLocaleString("es-CL")}
+                <div class="cart-controls">
+
+                    <button
+                        class="quantity-button"
+                        onclick="changeQuantity(${index}, -1)"
+                    >
+                        −
+                    </button>
+
+                    <span>
+                        ${item.quantity}
+                    </span>
+
+                    <button
+                        class="quantity-button"
+                        onclick="changeQuantity(${index}, 1)"
+                    >
+                        +
+                    </button>
+
+                    <button
+                        class="remove-button"
+                        onclick="removeFromCart(${index})"
+                    >
+                        Eliminar
+                    </button>
+
                 </div>
 
             </div>
-
-
-            <div class="quantity-controls">
-
-                <button
-                    onclick="changeQuantity(${index}, -1)"
-                >
-                    −
-                </button>
-
-                <span class="quantity">
-                    ${item.quantity}
-                </span>
-
-                <button
-                    onclick="changeQuantity(${index}, 1)"
-                >
-                    +
-                </button>
-
-            </div>
-
-
-            <button
-                class="remove-button"
-                onclick="removeItem(${index})"
-            >
-                ELIMINAR
-            </button>
 
         `;
 
-
-        cartItems.appendChild(div);
+        cartItems.innerHTML += itemHTML;
 
     });
 
+    cartCount.textContent = quantityTotal;
 
-    cartCount.textContent =
-        quantityTotal;
-
-
-    cartTotal.textContent =
-        "$" + total.toLocaleString("es-CL");
+    cartTotal.textContent = formatPrice(total);
 
 }
 
 
-/* =========================
-   CAMBIAR CANTIDAD
-========================= */
+function changeQuantity(index, change) {
 
-function changeQuantity(
-    index,
-    amount
-) {
-
-    cart[index].quantity += amount;
-
+    cart[index].quantity += change;
 
     if (cart[index].quantity <= 0) {
 
@@ -1504,17 +1200,12 @@ function changeQuantity(
 
     }
 
-
     updateCart();
 
 }
 
 
-/* =========================
-   ELIMINAR
-========================= */
-
-function removeItem(index) {
+function removeFromCart(index) {
 
     cart.splice(index, 1);
 
@@ -1523,116 +1214,68 @@ function removeItem(index) {
 }
 
 
+function formatPrice(price) {
+
+    return "$" + price.toLocaleString("es-CL");
+
+}
+
+
 /* =========================
-   ABRIR CARRITO
+   ABRIR / CERRAR CARRITO
 ========================= */
 
 function openCart() {
 
-    document
-        .getElementById("cartOverlay")
-        .classList.add("active");
+    document.getElementById("cartModal").classList.add("active");
+
+    updateCart();
 
 }
 
-
-/* =========================
-   CERRAR CARRITO
-========================= */
 
 function closeCart() {
 
-    document
-        .getElementById("cartOverlay")
-        .classList.remove("active");
+    document.getElementById("cartModal").classList.remove("active");
 
 }
 
 
 /* =========================
-   CERRAR AL TOCAR AFUERA
+   CERRAR CARRITO AL HACER
+   CLICK FUERA
 ========================= */
 
-document
-    .getElementById("cartOverlay")
-    .addEventListener(
-        "click",
-        function(event) {
+document.getElementById("cartModal").addEventListener("click", function(event) {
 
-            if (
-                event.target === this
-            ) {
+    if (event.target === this) {
 
-                closeCart();
-
-            }
-
-        }
-    );
-
-
-/* =========================
-   PEDIDO POR INSTAGRAM
-========================= */
-
-function sendInstagramOrder() {
-
-    if (cart.length === 0) {
-
-        alert(
-            "Tu carrito está vacío."
-        );
-
-        return;
+        closeCart();
 
     }
 
-
-    let message =
-        "Hola PZ Storee 👋%0A%0A" +
-        "Quiero consultar por este pedido:%0A%0A";
+});
 
 
-    let total = 0;
+/* =========================
+   INICIAR SIEMPRE ARRIBA
+========================= */
 
+window.addEventListener("load", function() {
 
-    cart.forEach(function(item) {
+    if (window.location.hash) {
 
-        const itemTotal =
-            item.price * item.quantity;
+        history.replaceState(
+            null,
+            "",
+            window.location.pathname
+        );
 
-        total += itemTotal;
+    }
 
+    window.scrollTo(0, 0);
 
-        message +=
-            "• " +
-            item.name +
-            " | Talla: " +
-            item.size +
-            " | Cantidad: " +
-            item.quantity +
-            " | $" +
-            itemTotal.toLocaleString("es-CL") +
-            "%0A";
-
-    });
-
-
-    message +=
-        "%0ATotal: $" +
-        total.toLocaleString("es-CL");
-
-
-    const instagram =
-        "https://www.instagram.com/pzz.storee/";
-
-
-    window.open(
-        instagram,
-        "_blank"
-    );
-
-}
+});
 
 </script>
 
