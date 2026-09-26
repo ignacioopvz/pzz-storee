@@ -1,1060 +1,831 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PZ Storee</title>
+
+    <style>
+
+        /* =====================================================
+           CONFIGURACIÓN GENERAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           FONDO
+           NEGRO + TRAZOS TIPO LÁPIZ / AURORA
+        ===================================================== */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background: #050505;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+
+        /* Luz suave de fondo */
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.16;
+        }
+
+        .glow-one {
+            width: 550px;
+            height: 300px;
+            background: #ffffff;
+            top: -100px;
+            left: -180px;
+            transform: rotate(-25deg);
+        }
+
+        .glow-two {
+            width: 500px;
+            height: 280px;
+            background: #aaaaaa;
+            bottom: -80px;
+            right: -150px;
+            transform: rotate(25deg);
+        }
+
+        .glow-three {
+            width: 350px;
+            height: 200px;
+            background: #dddddd;
+            top: 45%;
+            right: -180px;
+            filter: blur(110px);
+            opacity: 0.10;
+        }
+
+
+        /* =====================================================
+           TRAZOS
+        ===================================================== */
+
+        .stroke {
+            position: absolute;
+            height: 2px;
+            border-radius: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.20),
+                rgba(255,255,255,0.75),
+                rgba(210,210,210,0.35),
+                transparent
+            );
+
+            filter: blur(1px);
+            opacity: 0.75;
+            transform-origin: center;
+        }
+
+
+        /* =====================================================
+           LADO IZQUIERDO
+        ===================================================== */
+
+        .stroke-left-1 {
+            width: 420px;
+            left: -130px;
+            top: 13%;
+            transform: rotate(-22deg);
+        }
+
+        .stroke-left-2 {
+            width: 320px;
+            left: -90px;
+            top: 27%;
+            transform: rotate(18deg);
+            opacity: 0.50;
+        }
+
+        .stroke-left-3 {
+            width: 500px;
+            left: -190px;
+            top: 68%;
+            transform: rotate(-13deg);
+            opacity: 0.65;
+        }
+
+        .stroke-left-4 {
+            width: 280px;
+            left: -60px;
+            top: 82%;
+            transform: rotate(25deg);
+            opacity: 0.40;
+        }
+
+
+        /* =====================================================
+           LADO DERECHO
+        ===================================================== */
+
+        .stroke-right-1 {
+            width: 430px;
+            right: -150px;
+            top: 16%;
+            transform: rotate(21deg);
+        }
+
+        .stroke-right-2 {
+            width: 300px;
+            right: -80px;
+            top: 31%;
+            transform: rotate(-17deg);
+            opacity: 0.48;
+        }
+
+        .stroke-right-3 {
+            width: 520px;
+            right: -210px;
+            top: 66%;
+            transform: rotate(15deg);
+            opacity: 0.62;
+        }
+
+        .stroke-right-4 {
+            width: 300px;
+            right: -80px;
+            top: 84%;
+            transform: rotate(-24deg);
+            opacity: 0.42;
+        }
+
+
+        /* =====================================================
+           TRAZOS EXTRA MUY SUAVES
+        ===================================================== */
+
+        .soft-stroke {
+            position: absolute;
+            height: 5px;
+            border-radius: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.08),
+                rgba(255,255,255,0.28),
+                transparent
+            );
+
+            filter: blur(5px);
+        }
+
+        .soft-left {
+            width: 500px;
+            left: -180px;
+            top: 45%;
+            transform: rotate(-10deg);
+        }
+
+        .soft-right {
+            width: 500px;
+            right: -180px;
+            top: 50%;
+            transform: rotate(12deg);
+        }
+
+
+        /* =====================================================
+           BARRA DE NAVEGACIÓN
+        ===================================================== */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            opacity: 0.6;
+        }
+
+
+        /* =====================================================
+           INICIO
+        ===================================================== */
+
+        #inicio {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 100px 20px 60px;
+        }
+
+        .hero {
+            max-width: 700px;
+            width: 100%;
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            width: 210px;
+            max-width: 70vw;
+            height: auto;
+
+            object-fit: contain;
+
+            filter:
+                drop-shadow(0 0 15px rgba(255,255,255,0.10))
+                drop-shadow(0 0 35px rgba(255,255,255,0.06));
+        }
+
+
+        /* =====================================================
+           TEXTO PRINCIPAL
+        ===================================================== */
+
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 65px);
+            font-weight: 500;
+            letter-spacing: 7px;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            color: #a9a9a9;
+            font-size: 14px;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+
+
+        /* =====================================================
+           BOTÓN
+        ===================================================== */
+
+        .main-button {
+            display: inline-block;
+
+            padding: 15px 30px;
+
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 2px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 12px;
+            letter-spacing: 2px;
+
+            transition: 0.3s;
+
+            background: rgba(255,255,255,0.03);
+        }
+
+        .main-button:hover {
+            background: white;
+            color: black;
+        }
+
+
+        /* =====================================================
+           PRODUCTOS
+        ===================================================== */
+
+        #productos {
+            min-height: 100vh;
+            padding: 120px 25px 100px;
+        }
+
+        .products-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
 
-<meta charset="UTF-8">
+        .products-title h2 {
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: 5px;
+        }
+
+        .products-title p {
+            margin-top: 12px;
+            color: #888;
+            font-size: 13px;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        /* =====================================================
+           PRODUCTO DE PRUEBA
+        ===================================================== */
 
-<title>PZ Storee</title>
+        .product-container {
+            max-width: 430px;
+            margin: auto;
 
-<style>
+            padding: 30px;
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+            background: rgba(255,255,255,0.035);
 
-html {
-    scroll-behavior: smooth;
-}
+            border: 1px solid rgba(255,255,255,0.10);
 
-body {
+            backdrop-filter: blur(12px);
 
-    font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
 
-    background: #050505;
+            border-radius: 5px;
+        }
 
-    color: white;
+        .product-placeholder {
+            height: 330px;
 
-    overflow-x: hidden;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            color: #555;
 
-/* =========================
-   FONDO
-========================= */
+            border: 1px dashed rgba(255,255,255,0.15);
 
-body::before {
+            margin-bottom: 25px;
 
-    content: "";
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
 
-    position: fixed;
+        .product-name {
+            font-size: 21px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
 
-    width: 900px;
+        .price {
+            color: #ddd;
+            font-size: 17px;
+            margin-bottom: 25px;
+        }
 
-    height: 600px;
 
-    top: -300px;
+        /* =====================================================
+           TALLAS
+        ===================================================== */
 
-    left: -300px;
+        .sizes-title {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
 
-    border-radius: 50%;
+        .sizes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 7px;
 
-    background:
-    radial-gradient(
-        ellipse,
-        rgba(255,255,255,0.15),
-        rgba(120,120,120,0.08),
-        transparent 70%
-    );
+            margin-bottom: 25px;
+        }
 
-    z-index: -2;
-}
+        .size {
+            width: 40px;
+            height: 40px;
 
+            border: 1px solid rgba(255,255,255,0.2);
 
-body::after {
+            background: transparent;
+            color: white;
 
-    content: "";
+            cursor: pointer;
 
-    position: fixed;
+            transition: 0.2s;
+        }
 
-    width: 900px;
+        .size:hover {
+            border-color: white;
+        }
 
-    height: 600px;
+        .size.selected {
+            background: white;
+            color: black;
+            border-color: white;
+        }
 
-    bottom: -300px;
 
-    right: -300px;
+        /* =====================================================
+           BOTÓN INSTAGRAM
+        ===================================================== */
 
-    border-radius: 50%;
+        .instagram-button {
+            width: 100%;
 
-    background:
-    radial-gradient(
-        ellipse,
-        rgba(255,255,255,0.14),
-        rgba(120,120,120,0.08),
-        transparent 70%
-    );
+            padding: 15px;
 
-    z-index: -2;
-}
+            border: 1px solid rgba(255,255,255,0.6);
 
+            background: white;
+            color: black;
 
-/* ONDAS */
+            cursor: pointer;
 
-.waves {
+            font-size: 12px;
+            letter-spacing: 2px;
 
-    position: fixed;
+            transition: 0.3s;
+        }
 
-    inset: 0;
+        .instagram-button:hover {
+            background: transparent;
+            color: white;
+        }
 
-    overflow: hidden;
 
-    pointer-events: none;
+        /* =====================================================
+           FOOTER
+        ===================================================== */
 
-    z-index: -1;
-}
+        footer {
+            text-align: center;
 
+            padding: 50px 20px;
 
-.wave {
+            color: #555;
 
-    position: absolute;
+            font-size: 11px;
 
-    border-radius: 50%;
+            letter-spacing: 2px;
+        }
 
-    border: 1px solid rgba(255,255,255,0.13);
 
-    transform: rotate(-20deg);
-}
+        /* =====================================================
+           MÓVIL
+        ===================================================== */
 
+        @media (max-width: 600px) {
 
-.wave:nth-child(1) {
+            nav {
+                padding: 0 18px;
+                height: 60px;
+            }
 
-    width: 900px;
+            nav a {
+                margin-left: 12px;
+                font-size: 11px;
+            }
 
-    height: 500px;
+            .nav-logo {
+                font-size: 14px;
+            }
 
-    top: -250px;
+            .logo {
+                width: 170px;
+            }
 
-    left: -250px;
-}
+            .hero h1 {
+                font-size: 34px;
+                letter-spacing: 4px;
+            }
 
+            .hero p {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
 
-.wave:nth-child(2) {
+            .stroke-left-1,
+            .stroke-right-1 {
+                width: 300px;
+            }
 
-    width: 1000px;
+            .stroke-left-3,
+            .stroke-right-3 {
+                width: 350px;
+            }
 
-    height: 550px;
+            .product-container {
+                padding: 20px;
+            }
 
-    top: -220px;
+        }
 
-    left: -280px;
-
-    border-color: rgba(255,255,255,0.09);
-}
-
-
-.wave:nth-child(3) {
-
-    width: 1100px;
-
-    height: 600px;
-
-    top: -190px;
-
-    left: -310px;
-
-    border-color: rgba(150,150,150,0.10);
-}
-
-
-.wave:nth-child(4) {
-
-    width: 1000px;
-
-    height: 550px;
-
-    bottom: -300px;
-
-    right: -300px;
-}
-
-
-.wave:nth-child(5) {
-
-    width: 1100px;
-
-    height: 600px;
-
-    bottom: -330px;
-
-    right: -330px;
-
-    border-color: rgba(150,150,150,0.10);
-}
-
-
-/* =========================
-   MENÚ
-========================= */
-
-nav {
-
-    position: fixed;
-
-    top: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    z-index: 100;
-
-    padding: 18px 25px;
-
-    background: rgba(0,0,0,0.75);
-
-    backdrop-filter: blur(12px);
-
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-
-.nav-content {
-
-    max-width: 1100px;
-
-    margin: auto;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-}
-
-
-.nav-name {
-
-    font-weight: bold;
-
-    letter-spacing: 2px;
-}
-
-
-.nav-links {
-
-    display: flex;
-
-    gap: 25px;
-}
-
-
-.nav-links a {
-
-    color: white;
-
-    text-decoration: none;
-
-    font-size: 12px;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================
-   INICIO
-========================= */
-
-#inicio {
-
-    min-height: 100vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    text-align: center;
-
-    padding: 100px 20px 60px;
-}
-
-
-.logo {
-
-    width: 240px;
-
-    max-width: 75vw;
-
-    height: auto;
-
-    display: block;
-
-    margin-bottom: 25px;
-
-    object-fit: contain;
-
-    filter:
-    drop-shadow(
-        0 10px 30px rgba(255,255,255,0.10)
-    );
-}
-
-
-.fallback {
-
-    font-size: 45px;
-
-    font-weight: 900;
-
-    letter-spacing: 7px;
-
-    margin-bottom: 25px;
-}
-
-
-.subtitle {
-
-    color: #aaa;
-
-    font-size: 13px;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-
-    margin-bottom: 35px;
-}
-
-
-.btn {
-
-    display: inline-block;
-
-    padding: 15px 32px;
-
-    background: white;
-
-    color: black;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    font-size: 12px;
-
-    letter-spacing: 1px;
-
-    transition: 0.25s;
-}
-
-
-.btn:hover {
-
-    background: transparent;
-
-    color: white;
-
-    border: 1px solid white;
-}
-
-
-/* =========================
-   PRODUCTOS
-========================= */
-
-#productos {
-
-    max-width: 1100px;
-
-    margin: auto;
-
-    padding: 100px 20px;
-}
-
-
-.section-title {
-
-    text-align: center;
-
-    margin-bottom: 50px;
-}
-
-
-.section-title h2 {
-
-    font-size: 30px;
-
-    letter-spacing: 4px;
-
-    margin-bottom: 10px;
-}
-
-
-.section-title p {
-
-    color: #888;
-
-    font-size: 13px;
-}
-
-
-.products {
-
-    display: grid;
-
-    grid-template-columns:
-    repeat(
-        auto-fit,
-        minmax(240px, 1fr)
-    );
-
-    gap: 25px;
-}
-
-
-.product {
-
-    background: rgba(12,12,12,0.90);
-
-    border: 1px solid rgba(255,255,255,0.10);
-
-    padding: 18px;
-
-    transition: 0.3s;
-}
-
-
-.product:hover {
-
-    transform: translateY(-5px);
-
-    border-color: rgba(255,255,255,0.30);
-}
-
-
-.product-image {
-
-    width: 100%;
-
-    aspect-ratio: 1 / 1;
-
-    object-fit: contain;
-
-    background: #090909;
-
-    margin-bottom: 18px;
-}
-
-
-.product h3 {
-
-    font-size: 17px;
-
-    margin-bottom: 8px;
-}
-
-
-.price {
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    margin-bottom: 18px;
-}
-
-
-/* =========================
-   TALLAS
-========================= */
-
-.size-title {
-
-    color: #999;
-
-    font-size: 11px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 9px;
-}
-
-
-.sizes {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 7px;
-
-    margin-bottom: 18px;
-}
-
-
-.size {
-
-    background: #111;
-
-    color: white;
-
-    border: 1px solid #333;
-
-    padding: 8px 10px;
-
-    cursor: pointer;
-
-    font-size: 12px;
-
-    transition: 0.2s;
-}
-
-
-.size:hover,
-.size.selected {
-
-    background: white;
-
-    color: black;
-
-    border-color: white;
-}
-
-
-.buy-btn {
-
-    width: 100%;
-
-    padding: 13px;
-
-    background: white;
-
-    color: black;
-
-    border: none;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-    letter-spacing: 1px;
-}
-
-
-.buy-btn:hover {
-
-    background: #ddd;
-}
-
-
-/* =========================
-   CARRITO
-========================= */
-
-.cart {
-
-    position: fixed;
-
-    right: 20px;
-
-    bottom: 20px;
-
-    z-index: 200;
-
-    background: white;
-
-    color: black;
-
-    padding: 14px 18px;
-
-    border-radius: 30px;
-
-    font-weight: bold;
-
-    font-size: 12px;
-
-    cursor: pointer;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,0.5);
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-
-    text-align: center;
-
-    padding: 70px 20px 40px;
-
-    color: #666;
-
-    font-size: 12px;
-}
-
-
-/* =========================
-   CELULAR
-========================= */
-
-@media (max-width: 600px) {
-
-    .nav-links {
-
-        gap: 12px;
-    }
-
-    .nav-links a {
-
-        font-size: 9px;
-    }
-
-    .logo {
-
-        width: 190px;
-    }
-
-    .fallback {
-
-        font-size: 32px;
-    }
-}
-
-</style>
-
+    </style>
 </head>
 
 
 <body>
 
 
-<!-- FONDO DE ONDAS -->
+    <!-- =====================================================
+         FONDO
+    ===================================================== -->
 
-<div class="waves">
+    <div class="background">
 
-    <div class="wave"></div>
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
 
-    <div class="wave"></div>
+        <!-- Izquierda -->
 
-    <div class="wave"></div>
+        <div class="stroke stroke-left-1"></div>
+        <div class="stroke stroke-left-2"></div>
+        <div class="stroke stroke-left-3"></div>
+        <div class="stroke stroke-left-4"></div>
 
-    <div class="wave"></div>
+        <!-- Derecha -->
 
-    <div class="wave"></div>
+        <div class="stroke stroke-right-1"></div>
+        <div class="stroke stroke-right-2"></div>
+        <div class="stroke stroke-right-3"></div>
+        <div class="stroke stroke-right-4"></div>
 
-</div>
+        <!-- Trazos difuminados -->
+
+        <div class="soft-stroke soft-left"></div>
+        <div class="soft-stroke soft-right"></div>
+
+    </div>
 
 
-<!-- MENÚ -->
+    <!-- =====================================================
+         NAVEGACIÓN
+    ===================================================== -->
 
-<nav>
+    <nav>
 
-    <div class="nav-content">
-
-        <div class="nav-name">
+        <div class="nav-logo">
             PZ STOREE
         </div>
 
-        <div class="nav-links">
-
-            <a href="#inicio">
-                INICIO
-            </a>
-
-            <a href="#productos">
-                PRODUCTOS
-            </a>
-
+        <div>
+            <a href="#inicio">INICIO</a>
+            <a href="#productos">PRODUCTOS</a>
         </div>
 
-    </div>
-
-</nav>
+    </nav>
 
 
-<!-- =========================
-     INICIO
-========================= -->
+    <!-- =====================================================
+         INICIO
+    ===================================================== -->
 
-<section id="inicio">
+    <section id="inicio">
 
+        <div class="hero">
 
-    <!--
-    AQUÍ VA EL LOGO
+            <div class="logo-container">
 
-    CAMBIA logo.png POR EL NOMBRE
-    EXACTO DEL ARCHIVO DE TU LOGO
-    -->
-
-    <img
-      src="18339.jpg"
-        alt="PZ Storee"
-        class="logo"
-        onerror="
-        this.style.display='none';
-        document.getElementById('fallback').style.display='block';
-        "
-    >
-
-
-    <div
-        id="fallback"
-        class="fallback"
-        style="display:none;"
-    >
-        PZ STOREE
-    </div>
-
-
-    <p class="subtitle">
-
-        TU ESTILO. TU ESENCIA.
-
-    </p>
-
-
-    <a
-        href="#productos"
-        class="btn"
-    >
-
-        VER PRODUCTOS
-
-    </a>
-
-
-</section>
-
-
-<!-- =========================
-     PRODUCTOS
-========================= -->
-
-<section id="productos">
-
-
-    <div class="section-title">
-
-        <h2>
-            PRODUCTOS
-        </h2>
-
-        <p>
-            Encuentra tu próximo estilo.
-        </p>
-
-    </div>
-
-
-    <div class="products">
-
-
-        <!-- =========================
-             RETRO 4
-        ========================== -->
-
-        <div class="product">
-
-
-            <!--
-            CAMBIA retro4.jpg POR EL NOMBRE
-            EXACTO DE LA FOTO
-            -->
-
-            <img
-                src="retro4.jpg"
-                alt="Retro 4"
-                class="product-image"
-            >
-
-
-            <h3>
-                Retro 4
-            </h3>
-
-
-            <!-- CAMBIA EL PRECIO -->
-
-            <div class="price">
-
-                $XX.XXX
+                <img
+                    src="18339.jpg"
+                    alt="PZ Storee"
+                    class="logo"
+                >
 
             </div>
 
 
-            <div class="size-title">
+            <h1>PZ STOREE</h1>
 
+            <p>
+                ESTILO · CALIDAD · ORIGINALIDAD
+            </p>
+
+
+            <a
+                href="#productos"
+                class="main-button"
+            >
+                VER PRODUCTOS
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCTOS
+    ===================================================== -->
+
+    <section id="productos">
+
+        <div class="products-title">
+
+            <h2>PRODUCTOS</h2>
+
+            <p>
+                Descubre nuestra colección
+            </p>
+
+        </div>
+
+
+        <div class="product-container">
+
+            <div class="product-placeholder">
+                IMAGEN DEL PRODUCTO
+            </div>
+
+
+            <div class="product-name">
+                RETRO 4
+            </div>
+
+
+            <div class="price">
+                $XX.XXX
+            </div>
+
+
+            <div class="sizes-title">
                 SELECCIONA TU TALLA
-
             </div>
 
 
             <div class="sizes">
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     36
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     37
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     38
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     39
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     40
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     41
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     42
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     43
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     44
                 </button>
 
-
-                <button
-                    class="size"
-                    onclick="selectSize(this)"
-                >
+                <button class="size" onclick="selectSize(this)">
                     45
                 </button>
-
 
             </div>
 
 
             <button
-                class="buy-btn"
-                onclick="buyInstagram(this)"
+                class="instagram-button"
+                onclick="openInstagram()"
             >
-
                 CONSULTAR POR INSTAGRAM
-
             </button>
-
 
         </div>
 
+    </section>
 
-    </div>
 
-</section>
+    <!-- =====================================================
+         PIE DE PÁGINA
+    ===================================================== -->
 
+    <footer>
 
-<!-- CARRITO -->
+        PZ STOREE · TODOS LOS DERECHOS RESERVADOS
 
-<div
-    class="cart"
-    onclick="showCart()"
->
+    </footer>
 
-    🛒 CARRITO
-    (<span id="cart-count">0</span>)
 
-</div>
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
 
+    <script>
 
-<footer>
+        function selectSize(button) {
 
-    © 2026 PZ Storee
+            const allSizes =
+                document.querySelectorAll(".size");
 
-</footer>
+            allSizes.forEach(function(size) {
+                size.classList.remove("selected");
+            });
 
-
-<script>
-
-
-/* =========================
-   CARRITO
-========================= */
-
-let cart = [];
-
-
-/* =========================
-   SELECCIONAR TALLA
-========================= */
-
-function selectSize(button) {
-
-
-    const product =
-        button.closest(".product");
-
-
-    product
-        .querySelectorAll(".size")
-        .forEach(
-            btn =>
-            btn.classList.remove("selected")
-        );
-
-
-    button.classList.add("selected");
-
-}
-
-
-/* =========================
-   INSTAGRAM
-========================= */
-
-function buyInstagram(button) {
-
-
-    const product =
-        button.closest(".product");
-
-
-    const selected =
-        product.querySelector(
-            ".size.selected"
-        );
-
-
-    if (!selected) {
-
-        alert(
-            "Primero selecciona una talla."
-        );
-
-        return;
-
-    }
-
-
-    const size =
-        selected.textContent.trim();
-
-
-    cart.push({
-
-        product: "Retro 4",
-
-        size: size
-
-    });
-
-
-    document.getElementById(
-        "cart-count"
-    ).textContent = cart.length;
-
-
-    /*
-    CAMBIA pzz.storee POR TU USUARIO
-    EXACTO DE INSTAGRAM.
-    */
-
-    const instagram =
-        "https://www.instagram.com/pzz.storee/";
-
-
-    window.open(
-        instagram,
-        "_blank"
-    );
-
-}
-
-
-/* =========================
-   VER CARRITO
-========================= */
-
-function showCart() {
-
-
-    if (cart.length === 0) {
-
-        alert(
-            "Tu carrito está vacío."
-        );
-
-        return;
-
-    }
-
-
-    let message =
-        "Productos seleccionados:\n\n";
-
-
-    cart.forEach(
-        (item, index) => {
-
-            message +=
-                `${index + 1}. ${item.product} - Talla ${item.size}\n`;
+            button.classList.add("selected");
 
         }
-    );
 
 
-    alert(message);
+        function openInstagram() {
 
-}
+            const selected =
+                document.querySelector(".size.selected");
 
-</script>
+            if (!selected) {
 
+                alert("Primero selecciona una talla.");
+
+                return;
+
+            }
+
+
+            const size =
+                selected.textContent.trim();
+
+
+            const instagram =
+                "https://www.instagram.com/pzz.storee/";
+
+
+            window.open(
+                instagram,
+                "_blank"
+            );
+
+        }
+
+    </script>
 
 </body>
-
 </html>
-
-
-
